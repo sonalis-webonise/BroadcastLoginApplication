@@ -19,7 +19,7 @@ import com.example.webonise.broadcastsample.MainActivity;
 
 public class ActivityMenu extends AppCompatActivity implements View.OnClickListener {
 
-    public final static String CUSTOM_INTENT="com.tutorialspoint.CUSTOM_INTENT";
+    public final static String CUSTOM_INTENT = "com.tutorialspoint.CUSTOM_INTENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class ActivityMenu extends AppCompatActivity implements View.OnClickListe
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.putBoolean("userlogin", false);
                 edit.commit();
+                broadcastIntent();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
@@ -58,10 +59,10 @@ public class ActivityMenu extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void broadcastIntent(View view) {
-        Intent intentBroadcast=new Intent();
-        intentBroadcast.setAction(CUSTOM_INTENT);
-        intentBroadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+    public void broadcastIntent() {
+        Intent intentBroadcast = new Intent();
+        intentBroadcast.setAction("com.example.ACTION_LOGOUT");
+//        intentBroadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         sendBroadcast(intentBroadcast);
     }
 
