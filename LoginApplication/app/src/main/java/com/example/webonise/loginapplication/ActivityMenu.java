@@ -9,7 +9,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -34,27 +36,38 @@ public class ActivityMenu extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                onLogoutClicked();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void onLogoutClicked() {
+        broadcastIntent();
         SharedPreferences sharedPreferences = getSharedPreferences("user", 0);
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putBoolean("userlogin", false);
         edit.commit();
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        return true;
     }
 
-    public void broadcastIntent (View view){
+    public void broadcastIntent() {
         Intent intentBroadcast = new Intent();
-        intentBroadcast.setAction(CUSTOM_INTENT);
-        intentBroadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        this.sendBroadcast(intentBroadcast);
+        intentBroadcast.setAction("com.example.webonise.broadcastsample.ACTION_LOGOUT");
+//        intentBroadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        sendBroadcast(intentBroadcast);
+
     }
 
     @Override
