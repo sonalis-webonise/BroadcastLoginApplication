@@ -114,13 +114,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
             } else {
                 if (!getEmail.equals(emailText)) {
-                    editEmail.setError("Enter Valid Mail Id");
+                    editEmail.setError(getString(R.string.error_login_valid_email));
                 }
                 else {
                     editEmail.clearFocus();
                 }
                 if (!getPassword.equals(passwordText)) {
-                    editPassword.setError("Enter Correct Password");
+                    editPassword.setError(getString(R.string.error_login_valid_password));
                 }
                 else {
                     editPassword.clearFocus();
@@ -132,14 +132,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean validateUser() {
 
         if (email.trim().isEmpty()) {
-            input_layout_email.setError("Enter Email Id");
+            input_layout_email.setError(getString(R.string.error_login_email));
             return false;
         }
         else {
             input_layout_email.setErrorEnabled(false);
         }
         if (password.trim().isEmpty()) {
-            input_layout_password.setError("Enter password");
+            input_layout_password.setError(getString(R.string.error_login_password));
             return false;
         }
         else {

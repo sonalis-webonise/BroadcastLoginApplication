@@ -134,7 +134,8 @@
             android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"></Spinner>
+            android:layout_margin="10dp"
+            android:entries="@array/spinner_security"></Spinner>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_securityAnswer"
