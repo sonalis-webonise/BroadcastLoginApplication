@@ -89,18 +89,15 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         input_layout_password = (TextInputLayout) findViewById(R.id.input_layout_password);
         input_layout_confirmPassword = (TextInputLayout) findViewById(R.id.input_layout_cpassword);
 
+        spinner=(Spinner)findViewById(R.id.spinner);
+
         radioGroup.setOnCheckedChangeListener(this);
         spinner.setOnItemSelectedListener(this);
         btnLogin.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
 
-        List<String> itemSpinner = new ArrayList<>();
-        itemSpinner.add("What is your nick name?");
-        itemSpinner.add("Who is your favourite actor?");
-        itemSpinner.add("Which school you went?");
-        itemSpinner.add("First pet you had?");
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemSpinner);
+        ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(this, R.array.spinner_security , android.R.layout.simple_spinner_item);
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
@@ -143,8 +140,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         securityQuestion = spinner.getSelectedItem().toString();
         securityAnswer = editAnswer.getText().toString();
 
-        contactdouble = Double.parseDouble(contactString);
-        contact = (int) contactdouble;
+
 
         if (!valiDateProfile()) {
             Toast toast = Toast.makeText(getApplicationContext(), "Enter Data", Toast.LENGTH_SHORT);
@@ -178,62 +174,64 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         String aplhaPattern = "([a-zA-Z]{3,30}\\s*)+";
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if (firstname.trim().isEmpty()) {
-            input_layout_fname.setError("Enter First Name");
+            input_layout_fname.setError(getString(R.string.error_fname));
             return false;
         } else {
             input_layout_fname.setErrorEnabled(false);
         }
         if (!firstname.matches(aplhaPattern)) {
-            input_layout_fname.setError("Enter Valid First Name");
+            input_layout_fname.setError(getString(R.string.error_invalid_fname));
             return false;
         } else {
             input_layout_fname.setErrorEnabled(false);
         }
         if (lastname.trim().isEmpty()) {
-            input_layout_lname.setError("Enter Last Name");
+            input_layout_lname.setError(getString(R.string.error_lname));
             return false;
         } else {
             input_layout_lname.setErrorEnabled(false);
         }
         if (!lastname.matches(aplhaPattern)) {
-            input_layout_lname.setError("Enter Valid Last Name with atleast 3 characters");
+            input_layout_lname.setError(getString(R.string.error_invalid_lname));
             return false;
         } else {
             input_layout_lname.setErrorEnabled(false);
         }
         if (contactString.length() > 10 || contactString.length() < 10) {
-            input_layout_contact.setError("Enter 10 Digit Contact Number");
+            contactdouble = Double.parseDouble(contactString);
+            contact = (int) contactdouble;
+            input_layout_contact.setError(getString(R.string.error_contact));
             return false;
         } else {
             input_layout_contact.setErrorEnabled(false);
         }
         if (email.trim().isEmpty()) {
-            input_layout_email.setError("Enter Email ID");
+            input_layout_email.setError(getString(R.string.error_email));
             return false;
         } else {
             input_layout_email.setErrorEnabled(false);
         }
         if (!email.matches(emailPattern)) {
-            input_layout_email.setError("Enter Valid Email ID");
+            input_layout_email.setError(getString(R.string.error_invalid_email));
             return false;
         } else {
             input_layout_email.setErrorEnabled(false);
         }
         if (password.trim().isEmpty()) {
-            input_layout_password.setError("Enter Password");
+            input_layout_password.setError(getString(R.string.error_password));
             return false;
         } else {
             input_layout_email.setErrorEnabled(false);
         }
         if (confirmPassword.trim().isEmpty()) {
-            input_layout_confirmPassword.setError("Enter Confirm Password");
+            input_layout_confirmPassword.setError(getString(R.string.error_cpassword));
             return false;
         } else {
             input_layout_email.setErrorEnabled(false);
         }
 
         if (!password.equals(confirmPassword)) {
-            input_layout_confirmPassword.setError("Enter Password same as in Password Field");
+            input_layout_confirmPassword.setError(getString(R.string.error_invalid_password));
             return false;
         } else {
             input_layout_confirmPassword.setErrorEnabled(false);

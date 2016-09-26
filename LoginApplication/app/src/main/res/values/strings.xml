@@ -2,4 +2,49 @@
     <string name="app_name">LoginApplication</string>
     <string name="title_activity_activity_menu">ActivityMenu</string>
     <string name="title_activity_menu">menu</string>
+
+    <string name="hint_fname">First Name</string>
+    <string name="hint_lname">Last Name</string>
+    <string name="hint_contact">Contact</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_cpassword">Confirm Password</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_answer">Answer Here</string>
+
+    <string name="hint_modelno">Model Number</string>
+    <string name="hint_quantity">Quantity</string>
+
+    <string name="error_login_email">Enter Email ID</string>
+    <string name="error_login_password">Enter password</string>
+
+    <string name="error_login_valid_email">Enter Valid Mail Id</string>
+    <string name="error_login_valid_password">Enter Correct Password</string>
+
+    <string name="error_fname">Enter First Name</string>
+    <string name="error_lname">Enter Last Name</string>
+    <string name="error_contact">Enter 10 Digit Contact Number</string>
+    <string name="error_email">Enter Email ID</string>
+    <string name="error_password">Enter Password</string>
+    <string name="error_cpassword">Enter Confirm Password</string>
+
+    <string name="error_invalid_fname">Enter Valid First Name</string>
+    <string name="error_invalid_lname">Enter Valid Last Name with atleast 3 characters</string>
+    <string name="error_invalid_email">Enter Valid Email ID</string>
+    <string name="error_invalid_password">Enter Password same as in Password Field</string>
+
+
+    <string-array name="spinner_security">
+        <item>What is your nick name?</item>
+        <item>Who is your favourite actor?</item>
+        <item>Which school you went?</item>
+        <item>First pet you had?</item>
+    </string-array>
+
+    <string-array name="spinner_category">
+        <item>Mobile</item>
+        <item>Laptop</item>
+        <item>Desktop</item>
+        <item>Accessories</item>
+    </string-array>
 </resources>

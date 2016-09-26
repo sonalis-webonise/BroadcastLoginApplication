@@ -37,14 +37,8 @@ public class InventoryFormActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_inventory_form);
         realm = Realm.getDefaultInstance();
         initViews();
-
-        List<String> itemSpinner = new ArrayList<>();
-        itemSpinner.add("Mobile");
-        itemSpinner.add("Laptop");
-        itemSpinner.add("Desktop");
-        itemSpinner.add("Accessories");
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemSpinner);
+        ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(this, R.array.spinner_category, android.R.layout.simple_spinner_item);
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
