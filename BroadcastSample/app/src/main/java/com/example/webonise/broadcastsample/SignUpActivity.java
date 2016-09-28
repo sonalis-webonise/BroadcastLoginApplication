@@ -27,6 +27,9 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
     private final String TAG = getClass().getSimpleName();
 
+    public static final String aplhaPattern = "([a-zA-Z]{3,30}\\s*)+";
+    public static final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
     private EditText editFirstName;
     private EditText editLastName;
     private EditText editContact;
@@ -169,8 +172,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private boolean valiDateProfile() {
-        String aplhaPattern = "([a-zA-Z]{3,30}\\s*)+";
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
         if (firstname.trim().isEmpty()) {
             input_layout_fname.setError(getString(R.string.error_fname));
             return false;

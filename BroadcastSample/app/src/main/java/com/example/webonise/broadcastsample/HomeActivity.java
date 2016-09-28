@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class HomeActivity extends AppCompatActivity {
 
     private final String TAG = getClass().getSimpleName();
+    public static final String user="user";
 
     private TextView textHome;
 
@@ -24,8 +25,8 @@ public class HomeActivity extends AppCompatActivity {
         textHome = (TextView) findViewById(R.id.textHome);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            UserProfile user = bundle.getParcelable("user");
-            textHome.setText(user.getFname() + " " + user.getLname() + "\n\n" + user.getContact() + "\n\n" + user.getEmail() + "\n\n" + user.getGender() + "\n\n" + user.getAddress() + "\n\n" + user.getSecurityQuestion() + "\n\n" + user.getSecurityAnswer());
+            UserProfile userProfile = bundle.getParcelable(user);
+            textHome.setText(userProfile.getFname() + " " + userProfile.getLname() + "\n\n" + userProfile.getContact() + "\n\n" + userProfile.getEmail() + "\n\n" + userProfile.getGender() + "\n\n" + userProfile.getAddress() + "\n\n" + userProfile.getSecurityQuestion() + "\n\n" + userProfile.getSecurityAnswer());
         }
     }
 

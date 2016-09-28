@@ -19,6 +19,9 @@ import io.realm.RealmResults;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
+    public static final String user = "user";
+    public static final String userlogin = "userlogin";
+    public static final String key="email";
 
     private Realm realm;
     private EditText editEmail;
@@ -29,21 +32,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String emailText;
     private String passwordText;
 
-    private TextInputLayout input_layout_email,input_layout_password;
-    private String email,password;
-    Toast toast;
+    private TextInputLayout input_layout_email, input_layout_password;
+    private String email, password;
 
     SharedPreferences sharedPreferences;
-    public boolean login_status=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         realm = Realm.getDefaultInstance();
-        sharedPreferences=getSharedPreferences("user",0);
-        Boolean islogin=sharedPreferences.getBoolean("userlogin",false);
-        if (islogin){
+        sharedPreferences = getSharedPreferences(user, 0);
+        Boolean islogin = sharedPreferences.getBoolean(userlogin, false);
+        if (islogin) {
             Intent intentHome = new Intent(this, ActivityMenu.class);
             startActivity(intentHome);
             finish();
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnSignup = (Button) findViewById(R.id.btnSignup);
 
-        input_layout_email=(TextInputLayout)findViewById(R.id.input_layout_loginEmail);
-        input_layout_password=(TextInputLayout)findViewById(R.id.input_layout_loginPassword);
+        input_layout_email = (TextInputLayout) findViewById(R.id.input_layout_loginEmail);
+        input_layout_password = (TextInputLayout) findViewById(R.id.input_layout_loginPassword);
 
         btnLogin.setOnClickListener(this);
         btnSignup.setOnClickListener(this);
@@ -71,8 +72,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        emailText = editEmail.getText().toString();
-        passwordText = editPassword.getText().toString();
         switch (v.getId()) {
             case R.id.btnLogin:
                 onLoginClick();
@@ -87,44 +86,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onLoginClick() {
-        email=editEmail.getText().toString();
-        password=editPassword.getText().toString();
+        email = editEmail.getText().toString();
+        password = editPassword.getText().toString();
         String getEmail;
         String getPassword;
         validateUser();
 
-        RealmResults<UserProfile> user = realm.where(UserProfile.class).findAll();
+        UserProfile userProfile = realm.where(UserProfile.class).equalTo(key,email).findFirst();
 
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//        builder.setMessage("Enter Valid Email Id and Password")
-//                .setPositiveButton("OK",null);
-//        AlertDialog alert = builder.create();
+        getEmail = userProfile.getEmail();
+        getPassword = userProfile.getPassword();
+        if (getEmail.equals(email) && getPassword.equals(password)) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(userlogin, true);
+            editor.commit();
 
-        for (UserProfile userProfile : user) {
-            getEmail = userProfile.getEmail();
-            getPassword = userProfile.getPassword();
-            if (getEmail.equals(emailText) && getPassword.equals(passwordText)) {
-//                alert.show();
-                SharedPreferences.Editor editor=sharedPreferences.edit();
-                editor.putBoolean("userlogin",true);
-                editor.commit();
-
-                Intent intentHome = new Intent(this, ActivityMenu.class);
-                startActivity(intentHome);
-                finish();
+            Intent intentHome = new Intent(this, ActivityMenu.class);
+            startActivity(intentHome);
+            finish();
+        } else {
+            if (!getEmail.equals(emailText)) {
+                editEmail.setError(getString(R.string.error_login_valid_email));
             } else {
-                if (!getEmail.equals(emailText)) {
-                    editEmail.setError(getString(R.string.error_login_valid_email));
-                }
-                else {
-                    editEmail.clearFocus();
-                }
-                if (!getPassword.equals(passwordText)) {
-                    editPassword.setError(getString(R.string.error_login_valid_password));
-                }
-                else {
-                    editPassword.clearFocus();
-                }
+                editEmail.clearFocus();
+            }
+            if (!getPassword.equals(passwordText)) {
+                editPassword.setError(getString(R.string.error_login_valid_password));
+            } else {
+                editPassword.clearFocus();
             }
         }
     }
@@ -134,15 +123,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (email.trim().isEmpty()) {
             input_layout_email.setError(getString(R.string.error_login_email));
             return false;
-        }
-        else {
+        } else {
             input_layout_email.setErrorEnabled(false);
         }
         if (password.trim().isEmpty()) {
             input_layout_password.setError(getString(R.string.error_login_password));
             return false;
-        }
-        else {
+        } else {
             input_layout_password.setErrorEnabled(false);
         }
         return true;

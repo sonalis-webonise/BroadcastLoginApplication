@@ -19,7 +19,10 @@ import com.example.webonise.broadcastsample.MainActivity;
 
 public class ActivityMenu extends AppCompatActivity implements View.OnClickListener {
 
-    public final static String CUSTOM_INTENT = "com.tutorialspoint.CUSTOM_INTENT";
+    public final static String CUSTOM_INTENT = "com.example.ACTION_LOGOUT";
+    public static final String user="user";
+    public static final String userlogin="userlogin";
+    public static final String inventory="inventory";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class ActivityMenu extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            InventoryClass inventory = bundle.getParcelable("inventory");
+            InventoryClass inventoryClass = bundle.getParcelable(inventory);
         }
     }
 
@@ -46,9 +49,9 @@ public class ActivityMenu extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.action_logout:
 
-                SharedPreferences sharedPreferences = getSharedPreferences("user", 0);
+                SharedPreferences sharedPreferences = getSharedPreferences(user, 0);
                 SharedPreferences.Editor edit = sharedPreferences.edit();
-                edit.putBoolean("userlogin", false);
+                edit.putBoolean(userlogin, false);
                 edit.commit();
                 broadcastIntent();
                 Intent intent = new Intent(this, MainActivity.class);
@@ -61,8 +64,7 @@ public class ActivityMenu extends AppCompatActivity implements View.OnClickListe
 
     public void broadcastIntent() {
         Intent intentBroadcast = new Intent();
-        intentBroadcast.setAction("com.example.ACTION_LOGOUT");
-//        intentBroadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        intentBroadcast.setAction(CUSTOM_INTENT);
         sendBroadcast(intentBroadcast);
     }
 
